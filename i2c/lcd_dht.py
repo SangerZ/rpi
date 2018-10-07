@@ -9,19 +9,27 @@ pin = 4
 display = lcddriver.lcd()
 display.lcd_clear()
 humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+#counter = 0
 
 try:
     while True:
         # Remember that your sentences can only be 16 characters long!
         #display.lcd_clear()
-        
+        '''
+        if counter % 2 == 0:
+            display.backlight_off()
+        if counter % 2 == 1:
+            display.backlight_on()
+        '''
         humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-        print("Writing to display  Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(temperature,humidity))
+        #print("Writing to display  Temp={0:0.1f}*C  Humidity={1:0.1f}%".format(temperature,humidity))
+        #print(counter)
         if humidity is not None and temperature is not None:
             display.lcd_display_string("Temp={0:0.1f}*C".format(temperature), 1)
             display.lcd_display_string("Humidity={0:0.1f}%".format(humidity), 2)
         else:
             display.lcd_display_string("Failed!", 1)
+        #counter += 1
         time.sleep(2)
         
         
